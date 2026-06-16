@@ -3,394 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>保利红珊瑚私域房源助手 v4</title>
+    <title>保利红珊瑚私域房源助手 v5</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f8fa;
-            color: #333;
-            line-height: 1.4;
-            padding-bottom: 30px;
-        }
-        .header {
-            background-color: #ffffff;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 12px 16px 8px 16px;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-        }
-        .app-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #111;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        .app-title span {
-            background: #e6f1fe;
-            color: #007aff;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 8px;
-            font-weight: normal;
-        }
-        .search-box {
-            position: relative;
-            margin-bottom: 8px;
-        }
-        .search-input {
-            width: 100%;
-            height: 38px;
-            background-color: #f1f2f5;
-            border: none;
-            border-radius: 8px;
-            padding: 0 16px 0 36px;
-            font-size: 14px;
-            outline: none;
-        }
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 11px;
-            color: #999;
-            font-size: 14px;
-        }
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-top: 6px;
-        }
-        .filter-select {
-            width: 100%;
-            height: 30px;
-            border: 1px solid #e1e2e6;
-            background-color: #fafbfc;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #444;
-            padding: 0 2px;
-            outline: none;
-        }
-        .filter-select:focus {
-            border-color: #3072f6;
-            background-color: #fff;
-        }
-        .stat-bar {
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .stat-text {
-            font-size: 13px;
-            color: #666;
-        }
-        .stat-text strong {
-            color: #111;
-            font-size: 15px;
-            margin: 0 2px;
-        }
-        .add-btn {
-            background-color: #3072f6;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 14px;
-            font-size: 13px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 2px 4px rgba(48,114,246,0.2);
-            cursor: pointer;
-        }
-        .list-container {
-            padding: 0 16px;
-        }
-        .house-card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-            display: flex;
-            gap: 12px;
-            position: relative;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-        .house-card:active {
-            background-color: #f9f9f9;
-        }
-        .img-wrapper {
-            width: 95px;
-            height: 95px;
-            border-radius: 8px;
-            background-color: #eaebf0;
-            overflow: hidden;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .img-placeholder {
-            color: #aaa;
-            font-size: 11px;
-            text-align: center;
-            padding: 5px;
-        }
-        .house-info {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-width: 0;
-        }
-        .info-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: #111;
-            margin-bottom: 4px;
-            word-break: break-all;
-            white-space: normal;
-        }
-        .info-specs {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .info-code-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
-        }
-        .info-code {
-            font-size: 12px;
-            color: #555;
-            background-color: #f1f2f5;
-            padding: 1px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            word-break: break-all;
-            user-select: all;
-            -webkit-user-select: all;
-        }
-        .info-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-top: 2px;
-        }
-        .info-price {
-            font-size: 16px;
-            font-weight: bold;
-            color: #fa5741;
-        }
-        .info-price span {
-            font-size: 11px;
-            font-weight: normal;
-        }
-        .info-time {
-            font-size: 11px;
-            color: #999;
-        }
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 200;
-            display: none;
-            justify-content: center;
-            align-items: flex-end;
-        }
-        .modal-content {
-            background-color: #ffffff;
-            width: 100%;
-            max-height: 90vh;
-            border-top-left-radius: 16px;
-            border-top-right-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            animation: slideUp 0.25s ease-out;
-        }
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-        .modal-header {
-            padding: 16px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-title {
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .close-icon {
-            font-size: 20px;
-            color: #999;
-            cursor: pointer;
-            padding: 0 4px;
-        }
-        .modal-body {
-            padding: 16px;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-        .form-group {
-            margin-bottom: 14px;
-        }
-        .form-row {
-            display: flex;
-            gap: 10px;
-        }
-        .form-row .form-group {
-            flex: 1;
-        }
-        label {
-            display: block;
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-        input, select {
-            width: 100%;
-            height: 40px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            padding: 0 10px;
-            font-size: 14px;
-            outline: none;
-            background-color: #fff;
-        }
-        input:focus, select:focus {
-            border-color: #3072f6;
-        }
-        select:disabled {
-            background-color: #f5f6f8;
-            color: #aaa;
-            cursor: not-allowed;
-        }
-        .readonly-box {
-            background-color: #f5f6f8;
-            color: #555;
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-        }
-        .upload-container {
-            border: 1px dashed #ccc;
-            border-radius: 6px;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            background-color: #fafbfc;
-            overflow: hidden;
-        }
-        .upload-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .upload-hint {
-            font-size: 12px;
-            color: #888;
-            text-align: center;
-        }
-        .upload-hint span {
-            font-size: 20px;
-            display: block;
-            margin-bottom: 2px;
-            color: #666;
-        }
-        .modal-footer {
-            padding: 12px 16px;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 12px;
-        }
-        .btn-cancel {
-            flex: 1;
-            height: 44px;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            border-radius: 8px;
-            font-size: 15px;
-            color: #666;
-        }
-        .btn-save {
-            flex: 2;
-            height: 44px;
-            border: none;
-            background-color: #3072f6;
-            color: #fff;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: bold;
-        }
-        .btn-delete {
-            background-color: #fff;
-            color: #fa5741;
-            border: 1px solid #fa5741;
-            padding: 0 12px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        .toast {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0,0,0,0.75);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            z-index: 300;
-            display: none;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 50px 0;
-            color: #999;
-            font-size: 14px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f7f8fa; color: #333; line-height: 1.4; padding-bottom: 30px; }
+        .header { background-color: #ffffff; position: sticky; top: 0; z-index: 100; padding: 12px 16px 8px 16px; box-shadow: 0 1px 5px rgba(0,0,0,0.05); }
+        .app-title { font-size: 18px; font-weight: bold; color: #111; margin-bottom: 10px; display: flex; align-items: center; }
+        .app-title span { background: #e6f1fe; color: #007aff; font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: normal; }
+        .search-box { position: relative; margin-bottom: 8px; }
+        .search-input { width: 100%; height: 38px; background-color: #f1f2f5; border: none; border-radius: 8px; padding: 0 16px 0 36px; font-size: 14px; outline: none; }
+        .search-icon { position: absolute; left: 12px; top: 11px; color: #999; font-size: 14px; }
+        .filter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px; }
+        .filter-select { width: 100%; height: 30px; border: 1px solid #e1e2e6; background-color: #fafbfc; border-radius: 6px; font-size: 12px; color: #444; padding: 0 2px; outline: none; }
+        .filter-select:focus { border-color: #3072f6; background-color: #fff; }
+        .stat-bar { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+        .stat-text { font-size: 13px; color: #666; }
+        .stat-text strong { color: #111; font-size: 15px; margin: 0 2px; }
+        .add-btn { background-color: #3072f6; color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 4px rgba(48,114,246,0.2); cursor: pointer; }
+        .list-container { padding: 0 16px; }
+        .house-card { background-color: #ffffff; border-radius: 12px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; gap: 12px; position: relative; cursor: pointer; border: 1px solid transparent; }
+        .house-card:active { background-color: #f9f9f9; }
+        .img-wrapper { width: 95px; height: 95px; border-radius: 8px; background-color: #eaebf0; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; }
+        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .img-placeholder { color: #aaa; font-size: 11px; text-align: center; padding: 5px; }
+        .house-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+        .info-title { font-size: 15px; font-weight: bold; color: #111; margin-bottom: 4px; word-break: break-all; white-space: normal; }
+        .info-specs { font-size: 12px; color: #666; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .info-code-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+        .info-code { font-size: 12px; color: #555; background-color: #f1f2f5; padding: 1px 6px; border-radius: 4px; font-family: monospace; word-break: break-all; user-select: all; -webkit-user-select: all; }
+        .info-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2px; }
+        .info-price { font-size: 16px; font-weight: bold; color: #fa5741; }
+        .info-price span { font-size: 11px; font-weight: normal; }
+        .info-time { font-size: 11px; color: #999; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 200; display: none; justify-content: center; align-items: flex-end; }
+        .modal-content { background-color: #ffffff; width: 100%; max-height: 90vh; border-top-left-radius: 16px; border-top-right-radius: 16px; display: flex; flex-direction: column; animation: slideUp 0.25s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .modal-header { padding: 16px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-size: 16px; font-weight: bold; }
+        .close-icon { font-size: 20px; color: #999; cursor: pointer; padding: 0 4px; }
+        .modal-body { padding: 16px; overflow-y: auto; flex-grow: 1; }
+        .form-group { margin-bottom: 14px; }
+        .form-row { display: flex; gap: 10px; }
+        .form-row .form-group { flex: 1; }
+        label { display: block; font-size: 13px; color: #666; margin-bottom: 4px; font-weight: 500; }
+        input, select { width: 100%; height: 40px; border: 1px solid #ddd; border-radius: 6px; padding: 0 10px; font-size: 14px; outline: none; background-color: #fff; }
+        input:focus, select:focus { border-color: #3072f6; }
+        select:disabled { background-color: #f5f6f8; color: #aaa; cursor: not-allowed; }
+        .readonly-box { background-color: #f5f6f8; color: #555; display: flex; align-items: center; font-weight: bold; }
+        .upload-container { border: 1px dashed #ccc; border-radius: 6px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; background-color: #fafbfc; overflow: hidden; }
+        .upload-container img { width: 100%; height: 100%; object-fit: cover; }
+        .upload-hint { font-size: 12px; color: #888; text-align: center; }
+        .upload-hint span { font-size: 20px; display: block; margin-bottom: 2px; color: #666; }
+        .modal-footer { padding: 12px 16px; border-top: 1px solid #eee; display: flex; gap: 12px; }
+        .btn-cancel { flex: 1; height: 44px; border: 1px solid #ddd; background-color: #fff; border-radius: 8px; font-size: 15px; color: #666; }
+        .btn-save { flex: 2; height: 44px; border: none; background-color: #3072f6; color: #fff; border-radius: 8px; font-size: 15px; font-weight: bold; }
+        .btn-delete { background-color: #fff; color: #fa5741; border: 1px solid #fa5741; padding: 0 12px; border-radius: 8px; font-size: 14px; }
+        .toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0,0,0,0.75); color: #fff; padding: 8px 16px; border-radius: 20px; font-size: 13px; z-index: 300; display: none; }
+        .empty-state { text-align: center; padding: 50px 0; color: #999; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="app-title">保利红珊瑚花园 <span>私域联动版助推器</span></div>
+        <div class="app-title">保利红珊瑚花园 <span>私域二阶联动外壳版</span></div>
         <div class="search-box">
             <span class="search-icon">🔍</span>
             <input type="text" id="searchInput" class="search-input" placeholder="输入编号或特定房号快速检索...">
@@ -410,22 +85,13 @@
                 <option value="20">20栋</option><option value="21">21栋</option>
                 <option value="22">22栋</option><option value="23">23栋</option>
             </select>
-            
-            <select id="filterFloor" class="filter-select">
-                <option value="">全部楼层</option>
-            </select>
-            
+            <select id="filterFloor" class="filter-select"><option value="">全部楼层</option></select>
             <select id="filterLayoutRoom" class="filter-select">
                 <option value="">全部居室</option>
-                <option value="2">2房</option>
-                <option value="3">3房</option>
-                <option value="4">4房</option>
+                <option value="2">2房</option><option value="3">3房</option><option value="4">4房</option>
             </select>
-            
             <select id="filterToilet" class="filter-select">
-                <option value="">全部卫</option>
-                <option value="1">1卫</option>
-                <option value="2">2卫</option>
+                <option value="">全部卫</option><option value="1">1卫</option><option value="2">2卫</option>
             </select>
         </div>
     </div>
@@ -437,7 +103,6 @@
 
     <div class="list-container" id="houseList"></div>
 
-    <!-- 录入/修改模态框 -->
     <div class="modal-overlay" id="houseModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -450,23 +115,15 @@
                     <div class="form-group">
                         <label>房屋首图</label>
                         <div class="upload-container" id="uploadContainer">
-                            <div class="upload-hint" id="uploadHint">
-                                <span>📷</span>点击上传1张房源首图
-                            </div>
+                            <div class="upload-hint" id="uploadHint"><span>📷</span>点击上传1张房源首图</div>
                             <img id="previewImg" src="" style="display: none;">
                         </div>
                         <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>自定义编号</label>
-                            <input type="text" id="formCode" placeholder="默认留空，可手动输入">
-                        </div>
-                        <div class="form-group">
-                            <label>录入/更新时间</label>
-                            <input type="datetime-local" id="formTime">
-                        </div>
+                        <div class="form-group"><label>自定义编号</label><input type="text" id="formCode" placeholder="默认留空，可手动输入"></div>
+                        <div class="form-group"><label>录入/更新时间</label><input type="datetime-local" id="formTime"></div>
                     </div>
 
                     <div class="form-row">
@@ -486,42 +143,20 @@
                                 <option value="22">22栋</option><option value="23">23栋</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>2. 选择楼层</label>
-                            <select id="formFloorSelect" disabled>
-                                <option value="">-- 请先选择楼栋 --</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>3. 选择房号尾号</label>
-                            <select id="formRoomSelect" disabled>
-                                <option value="">-- 请先选择楼层 --</option>
-                            </select>
-                        </div>
+                        <div class="form-group"><label>2. 选择楼层</label><select id="formFloorSelect" disabled><option value="">-- 先选楼栋 --</option></select></div>
+                        <div class="form-group"><label>3. 选择房号尾号</label><select id="formRoomSelect" disabled><option value="">-- 先选楼层 --</option></select></div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>最终生成的房号</label>
-                            <input type="text" id="formRoom" class="readonly-box" readonly placeholder="自动合成，无需手动输入">
-                        </div>
+                        <div class="form-group"><label>最终生成的房号</label><input type="text" id="formRoom" class="readonly-box" readonly placeholder="自动合成"></div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>面积 (自动匹配)</label>
-                            <input type="text" id="formArea" class="readonly-box" readonly placeholder="由楼栋和房号决定">
-                        </div>
-                        <div class="form-group">
-                            <label>户型 (自动匹配)</label>
-                            <input type="text" id="formLayout" class="readonly-box" readonly placeholder="由楼栋和房号决定">
-                        </div>
+                        <div class="form-group"><label>面积 (自动匹配)</label><input type="text" id="formArea" class="readonly-box" readonly placeholder="自动计算"></div>
+                        <div class="form-group"><label>户型 (自动匹配)</label><input type="text" id="formLayout" class="readonly-box" readonly placeholder="自动计算"></div>
                     </div>
 
-                    <div class="form-group">
-                        <label>对外租金 (元/月)</label>
-                        <input type="number" id="formPrice" placeholder="请输入月租金">
-                    </div>
+                    <div class="form-group"><label>对外租金 (元/月)</label><input type="number" id="formPrice" placeholder="请输入月租金"></div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -536,18 +171,11 @@
 
     <script>
         let houses = [];
-        const localKey = 'private_houses_v3';
-        
-        try {
-            houses = JSON.parse(localStorage.getItem(localKey)) || [];
-        } catch(e) {
-            houses = [];
-        }
+        const localKey = 'private_houses_v5';
 
         const houseList = document.getElementById('houseList');
         const totalCount = document.getElementById('totalCount');
         const searchInput = document.getElementById('searchInput');
-        
         const filterBuilding = document.getElementById('filterBuilding');
         const filterFloor = document.getElementById('filterFloor');
         const filterLayoutRoom = document.getElementById('filterLayoutRoom');
@@ -564,11 +192,9 @@
         const formCode = document.getElementById('formCode');
         const formTime = document.getElementById('formTime');
         const formBuilding = document.getElementById('formBuilding');
-        
         const formFloorSelect = document.getElementById('formFloorSelect');
         const formRoomSelect = document.getElementById('formRoomSelect');
         const formRoom = document.getElementById('formRoom');
-        
         const formArea = document.getElementById('formArea');
         const formLayout = document.getElementById('formLayout');
         const formPrice = document.getElementById('formPrice');
@@ -586,7 +212,7 @@
             if ([4, 5, 6, 7].includes(b)) return 15;
             if ([8, 9].includes(b)) return 23;
             if ([10, 11].includes(b)) return 24;
-            return 32; 
+            return 32;
         }
 
         function getValidRoomSuffixes(building) {
@@ -595,14 +221,13 @@
             if ([13, 15, 17].includes(b)) return ["01", "02", "03"];
             if ([12, 14, 16, 18, 19].includes(b)) return ["01", "02", "04", "06"];
             if ([20, 21].includes(b)) return ["01", "02", "04", "05"];
-            return ["01", "02", "03", "04"]; 
+            return ["01", "02", "03", "04"];
         }
 
         function getHouseSpec(building, roomStr) {
             if (!building || !roomStr) return null;
             const roomNum = parseInt(roomStr, 10);
             if (isNaN(roomNum)) return null;
-            let floor = Math.floor(roomNum / 100);
             let unitType = roomNum % 100;
             const b = parseInt(building, 10);
 
@@ -610,96 +235,73 @@
                 if ([1, 2].includes(unitType)) return { area: "78.99㎡", layout: "2-2-1-1" };
                 if (unitType === 3) return { area: "106.79㎡", layout: "3-2-1-2" };
                 if (unitType === 4) return { area: "106.77㎡", layout: "3-2-1-2" };
-                return { area: "78.99㎡", layout: "2-2-1-1" };
             }
             if ([8, 9].includes(b)) {
                 if ([1, 2].includes(unitType)) return { area: "81.59㎡", layout: "2-2-1-1" };
                 if (unitType === 3) return { area: "107.86㎡", layout: "3-2-1-2" };
                 if (unitType === 4) return { area: "107.74㎡", layout: "3-2-1-2" };
-                return { area: "81.59㎡", layout: "2-2-1-1" };
             }
             if ([10, 11].includes(b)) {
                 if ([1, 2].includes(unitType)) return { area: "81.58㎡", layout: "2-2-1-1" };
                 if (unitType === 3) return { area: "107.85㎡", layout: "3-2-1-2" };
                 if (unitType === 4) return { area: "107.74㎡", layout: "3-2-1-2" };
-                return { area: "81.58㎡", layout: "2-2-1-1" };
             }
             if (b === 12) {
                 if (unitType === 1) return { area: "91.6㎡", layout: "3-2-1-2" };
                 if (unitType === 2) return { area: "126.07㎡", layout: "3-2-1-2" };
                 if (unitType === 4) return { area: "129.07㎡", layout: "3-2-1-2" };
                 if (unitType === 6) return { area: "145.49㎡", layout: "4-2-1-2" };
-                return { area: "126.07㎡", layout: "3-2-1-2" };
             }
-            if (b === 13) {
+            if ([13, 15, 17].includes(b)) {
                 if (unitType === 1) return { area: "95.02㎡", layout: "3-2-1-2" };
                 if (unitType === 2) return { area: "169.1㎡", layout: "4-2-1-2" };
                 if (unitType === 3) return { area: "169.06㎡", layout: "4-2-1-2" };
-                return { area: "169.1㎡", layout: "4-2-1-2" };
             }
             if ([14, 16].includes(b)) {
                 if (unitType === 1) return { area: "91.6㎡", layout: "3-2-1-2" };
                 if (unitType === 2) return { area: "126.07㎡", layout: "3-2-1-2" };
                 if (unitType === 4) return { area: "169.07㎡", layout: "4-2-1-2" };
                 if (unitType === 6) return { area: "145.49㎡", layout: "4-2-1-2" };
-                return { area: "126.07㎡", layout: "3-2-1-2" };
-            }
-            if ([15, 17].includes(b)) {
-                if (unitType === 1) return { area: "95.02㎡", layout: "3-2-1-2" };
-                if (unitType === 2) return { area: "169.1㎡", layout: "4-2-1-2" };
-                if (unitType === 3) return { area: "169.06㎡", layout: "4-2-1-2" };
-                return { area: "169.1㎡", layout: "4-2-1-2" };
             }
             if (b === 18) {
                 if (unitType === 1) return { area: "79.48㎡", layout: "2-2-1-1" };
                 if (unitType === 2) return { area: "145.82㎡", layout: "4-2-1-2" };
                 if (unitType === 4) return { area: "130.41㎡", layout: "3-2-1-2" };
                 if (unitType === 6) return { area: "145.48㎡", layout: "4-2-1-2" };
-                return { area: "130.41㎡", layout: "3-2-1-2" };
             }
             if (b === 19) {
                 if (unitType === 1) return { area: "79.58㎡", layout: "2-2-1-1" };
                 if (unitType === 2) return { area: "145.23㎡", layout: "4-2-1-2" };
                 if (unitType === 4) return { area: "130.83㎡", layout: "3-2-1-2" };
                 if (unitType === 6) return { area: "145.69㎡", layout: "4-2-1-2" };
-                return { area: "130.83㎡", layout: "3-2-1-2" };
             }
             if ([20, 21].includes(b)) {
                 if (unitType === 1) return { area: "80.95㎡", layout: "2-2-1-2" };
                 if (unitType === 2) return { area: "129.42㎡", layout: "3-2-1-2" };
                 if (unitType === 4) return { area: "104.71㎡", layout: "3-2-1-2" };
                 if (unitType === 5) return { area: "102.5㎡", layout: "3-2-1-2" };
-                return { area: "104.71㎡", layout: "3-2-1-2" };
             }
             if ([22, 23].includes(b)) {
                 if (unitType === 1 || unitType === 2) return { area: "79.66㎡", layout: "2-2-1-1" };
                 if (unitType === 3) return { area: "105.06㎡", layout: "3-2-1-2" };
                 if (unitType === 4) return { area: "105.03㎡", layout: "3-2-1-2" };
-                return { area: "79.66㎡", layout: "2-2-1-1" };
             }
-            return null;
+            return { area: "未知", layout: "未知" };
         }
 
         formBuilding.addEventListener('change', function() {
             const bVal = this.value;
             formFloorSelect.innerHTML = '<option value="">-- 请选择楼层 --</option>';
-            formRoomSelect.innerHTML = '<option value="">-- 请先选择楼层 --</option>';
+            formRoomSelect.innerHTML = '<option value="">-- 先选楼层 --</option>';
             formRoomSelect.disabled = true;
-            formRoom.value = "";
-            formArea.value = "";
-            formLayout.value = "";
-
-            if (!bVal) {
-                formFloorSelect.disabled = true;
-                return;
-            }
+            formRoom.value = ""; formArea.value = ""; formLayout.value = "";
+            if (!bVal) { formFloorSelect.disabled = true; return; }
 
             const maxFloor = getMaxFloorByBuilding(bVal);
             for (let f = 1; f <= maxFloor; f++) {
-                if (f === 4 || f === 14 || f === 24) continue; 
+                if ([4, 14, 24].includes(f)) continue;
                 const opt = document.createElement('option');
-                opt.value = f;
-                opt.innerText = f + " 层";
+                opt.value = f; opt.innerText = f + " 层";
                 formFloorSelect.appendChild(opt);
             }
             formFloorSelect.disabled = false;
@@ -708,120 +310,68 @@
         formFloorSelect.addEventListener('change', function() {
             const fVal = this.value;
             formRoomSelect.innerHTML = '<option value="">-- 尾号 --</option>';
-            formRoom.value = "";
-            formArea.value = "";
-            formLayout.value = "";
-
-            if (!fVal) {
-                formRoomSelect.disabled = true;
-                return;
-            }
+            formRoom.value = ""; formArea.value = ""; formLayout.value = "";
+            if (!fVal) { formRoomSelect.disabled = true; return; }
 
             const suffixes = getValidRoomSuffixes(formBuilding.value);
             suffixes.forEach(suff => {
                 const opt = document.createElement('option');
-                opt.value = suff;
-                opt.innerText = suff + " 室";
+                opt.value = suff; opt.innerText = suff + " 室";
                 formRoomSelect.appendChild(opt);
             });
             formRoomSelect.disabled = false;
         });
 
         formRoomSelect.addEventListener('change', function() {
-            const suffix = this.value;
-            const floor = formFloorSelect.value;
-            const building = formBuilding.value;
-
-            if (!suffix || !floor || !building) {
-                formRoom.value = "";
-                formArea.value = "";
-                formLayout.value = "";
-                return;
-            }
-
-            const paddingFloor = String(floor);
-            const finalRoomCode = paddingFloor + suffix;
+            const suffix = this.value; const floor = formFloorSelect.value; const building = formBuilding.value;
+            if (!suffix || !floor || !building) { formRoom.value = ""; formArea.value = ""; formLayout.value = ""; return; }
+            const finalRoomCode = floor + suffix;
             formRoom.value = finalRoomCode;
-
             const spec = getHouseSpec(building, finalRoomCode);
-            if (spec) {
-                formArea.value = spec.area;
-                formLayout.value = spec.layout;
-            } else {
-                formArea.value = "未知";
-                formLayout.value = "未知";
-            }
+            if (spec) { formArea.value = spec.area; formLayout.value = spec.layout; }
         });
 
         function updateFilterFloorOptions() {
             const selectedBuilding = filterBuilding.value;
             const maxFloor = getMaxFloorByBuilding(selectedBuilding);
             const oldFloorVal = filterFloor.value;
-
             filterFloor.innerHTML = '<option value="">全部楼层</option>';
             for (let f = 1; f <= maxFloor; f++) {
                 const opt = document.createElement('option');
-                opt.value = f;
-                opt.innerText = f + "层";
+                opt.value = f; opt.innerText = f + "层";
                 filterFloor.appendChild(opt);
             }
-
-            if (parseInt(oldFloorVal, 10) <= maxFloor) {
-                filterFloor.value = oldFloorVal;
-            }
+            if (parseInt(oldFloorVal, 10) <= maxFloor) filterFloor.value = oldFloorVal;
         }
 
         function calculateTimeRelation(targetTimeStr) {
             if (!targetTimeStr) return "未知时间";
-            const now = new Date();
-            const target = new Date(targetTimeStr);
-            const diffMs = now - target;
-            if (diffMs < 0) return targetTimeStr.split('T')[0];
+            const now = new Date(); const target = new Date(targetTimeStr);
+            const diffMs = now - target; if (diffMs < 0) return targetTimeStr.split('T')[0];
             const diffMins = Math.floor(diffMs / (1000 * 60));
             if (diffMins <= 59) return diffMins <= 0 ? "刚刚" : `${diffMins}分钟前`;
-            const diffHours = Math.floor(diffMins / 60);
-            if (diffHours < 24) return `${diffHours}小时前`;
-            const diffDays = Math.floor(diffHours / 24);
-            if (diffDays <= 30) return `${diffDays}天前`;
-            return targetTimeStr.split('T')[0];
-        }
-
-        function formatLocalDateTime(date) {
-            const pad = (num) => String(num).padStart(2, '0');
-            return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+            const diffHours = Math.floor(diffMins / 60); if (diffHours < 24) return `${diffHours}小时前`;
+            return `${Math.floor(diffHours / 24)}天前`;
         }
 
         uploadContainer.addEventListener('click', () => fileInput.click());
-        
         fileInput.addEventListener('change', function() {
             const file = this.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const img = new Image();
-                    img.src = e.target.result;
+                    const img = new Image(); img.src = e.target.result;
                     img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        let maxW = 260; 
-                        let targetW = img.width;
-                        let targetH = img.height;
+                        const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+                        let maxW = 260; let targetW = img.width; let targetH = img.height;
                         if (img.width > maxW || img.height > maxW) {
-                            if (img.width > img.height) {
-                                targetW = maxW;
-                                targetH = Math.round((img.height * maxW) / img.width);
-                            } else {
-                                targetH = maxW;
-                                targetW = Math.round((img.width * maxW) / img.height);
-                            }
+                            if (img.width > img.height) { targetW = maxW; targetH = Math.round((img.height * maxW) / img.width); }
+                            else { targetH = maxW; targetW = Math.round((img.width * maxW) / img.height); }
                         }
-                        canvas.width = targetW;
-                        canvas.height = targetH;
+                        canvas.width = targetW; canvas.height = targetH;
                         ctx.drawImage(img, 0, 0, targetW, targetH);
-                        currentImgBase64 = canvas.toDataURL('image/jpeg', 0.5); 
-                        previewImg.src = currentImgBase64;
-                        previewImg.style.display = 'block';
-                        uploadHint.style.display = 'none';
+                        currentImgBase64 = canvas.toDataURL('image/jpeg', 0.5);
+                        previewImg.src = currentImgBase64; previewImg.style.display = 'block'; uploadHint.style.display = 'none';
                     }
                 }
                 reader.readAsDataURL(file);
@@ -829,268 +379,126 @@
         });
 
         function renderList() {
-            houseList.innerHTML = "";
-            let filtered = [...houses];
-            
+            houseList.innerHTML = ""; let filtered = [...houses];
             filtered.sort((a, b) => new Date(b.recordedTime) - new Date(a.recordedTime));
 
             const txtKeyword = searchInput.value.trim().toLowerCase();
             if (txtKeyword !== "") {
-                filtered = filtered.filter(h => {
-                    const codeStr = h.code ? h.code.toLowerCase() : "";
-                    const bStr = h.building ? h.building.toLowerCase() : "";
-                    const rStr = h.room ? h.room.toLowerCase() : "";
-                    return codeStr.includes(txtKeyword) || bStr.includes(txtKeyword) || rStr.includes(txtKeyword);
-                });
+                filtered = filtered.filter(h => (h.code||"").toLowerCase().includes(txtKeyword) || (h.building||"").toLowerCase().includes(txtKeyword) || (h.room||"").toLowerCase().includes(txtKeyword));
             }
-
-            const bFilter = filterBuilding.value;
-            if (bFilter !== "") {
-                filtered = filtered.filter(h => h.building === bFilter);
+            if (filterBuilding.value !== "") filtered = filtered.filter(h => h.building === filterBuilding.value);
+            if (filterFloor.value !== "") {
+                filtered = filtered.filter(h => Math.floor(parseInt(h.room, 10) / 100) === parseInt(filterFloor.value, 10));
             }
-
-            const floorFilter = filterFloor.value;
-            if (floorFilter !== "") {
-                const targetFloorNum = parseInt(floorFilter, 10);
-                filtered = filtered.filter(h => {
-                    const rNum = parseInt(h.room, 10);
-                    if(isNaN(rNum)) return false;
-                    return Math.floor(rNum / 100) === targetFloorNum;
-                });
-            }
-
-            const roomCountFilter = filterLayoutRoom.value;
-            if (roomCountFilter !== "") {
-                filtered = filtered.filter(h => h.layout && h.layout.charAt(0) === roomCountFilter);
-            }
-
-            const toiletFilter = filterToilet.value;
-            if (toiletFilter !== "") {
-                filtered = filtered.filter(h => h.layout && h.layout.charAt(h.layout.length - 1) === toiletFilter);
-            }
+            if (filterLayoutRoom.value !== "") filtered = filtered.filter(h => h.layout && h.layout.charAt(0) === filterLayoutRoom.value);
+            if (filterToilet.value !== "") filtered = filtered.filter(h => h.layout && h.layout.charAt(h.layout.length - 1) === filterToilet.value);
 
             totalCount.innerText = filtered.length;
-            if (filtered.length === 0) {
-                houseList.innerHTML = `<div class="empty-state">暂无符合条件的筛选结果</div>`;
-                return;
-            }
+            if (filtered.length === 0) { houseList.innerHTML = `<div class="empty-state">暂无筛选结果</div>`; return; }
 
             filtered.forEach((house) => {
-                let roomNum = parseInt(house.room, 10);
-                let floor = Math.floor(roomNum / 100);
-                let bNum = parseInt(house.building, 10);
-                let floorTag = "中层";
-                if (floor <= 3) floorTag = "低层";
-                else if ([4,5,6,7].includes(bNum) && floor >= 12) floorTag = "高层";
-                else if (floor >= 18) floorTag = "高层";
-
-                const dynamicTimeText = calculateTimeRelation(house.recordedTime);
-                const displayCode = house.code && house.code.trim() !== "" ? house.code : "未设置";
-                
+                let floor = Math.floor(parseInt(house.room, 10) / 100);
+                let floorTag = floor <= 3 ? "低层" : (floor >= 18 ? "高层" : "中层");
                 const card = document.createElement('div');
-                card.className = 'house-card';
-                card.onclick = () => openEditModal(house.id);
+                card.className = 'house-card'; card.onclick = () => openEditModal(house.id);
                 card.innerHTML = `
-                    <div class="img-wrapper">
-                        ${house.img ? `<img src="${house.img}">` : `<div class="img-placeholder">📷<br>暂无首图</div>`}
-                    </div>
+                    <div class="img-wrapper">${house.img ? `<img src="${house.img}">` : `<div class="img-placeholder">📷<br>暂无首图</div>`}</div>
                     <div class="house-info">
                         <div>
                             <div class="info-title">保利红珊瑚花园 ${house.building}栋 - ${house.room}室</div>
                             <div class="info-specs">${house.layout} | ${house.area} | ${floorTag}</div>
-                            <div class="info-code-row">
-                                <span class="info-code">编号: ${displayCode}</span>
-                            </div>
+                            <div class="info-code-row"><span class="info-code">编号: ${house.code || "未设置"}</span></div>
                         </div>
                         <div class="info-bottom">
                             <div class="info-price">${house.price} <span>元/月</span></div>
-                            <div class="info-time">${dynamicTimeText}</div>
+                            <div class="info-time">${calculateTimeRelation(house.recordedTime)}</div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 houseList.appendChild(card);
             });
         }
 
-        searchInput.addEventListener('input', renderList);
-        filterBuilding.addEventListener('change', () => {
-            updateFilterFloorOptions(); 
-            renderList();
-        });
-        filterFloor.addEventListener('change', renderList);
-        filterLayoutRoom.addEventListener('change', renderList);
-        filterToilet.addEventListener('change', renderList);
-
         openAddModalBtn.addEventListener('click', () => {
-            modalTitle.innerText = "录入新房源";
-            houseForm.reset();
-            editId.value = "";
-            currentImgBase64 = "";
-            previewImg.style.display = 'none';
-            uploadHint.style.display = 'block';
-            deleteBtn.style.display = 'none';
-            
-            formFloorSelect.innerHTML = '<option value="">-- 请先选择楼栋 --</option>';
-            formFloorSelect.disabled = true;
-            formRoomSelect.innerHTML = '<option value="">-- 请先选择楼层 --</option>';
-            formRoomSelect.disabled = true;
-            formRoom.value = "";
-
-            formCode.value = "";
-            formTime.value = formatLocalDateTime(new Date());
+            modalTitle.innerText = "录入新房源"; houseForm.reset(); editId.value = ""; currentImgBase64 = "";
+            previewImg.style.display = 'none'; uploadHint.style.display = 'block'; deleteBtn.style.display = 'none';
+            formFloorSelect.innerHTML = '<option value="">-- 先选楼栋 --</option>'; formFloorSelect.disabled = true;
+            formRoomSelect.innerHTML = '<option value="">-- 先选楼层 --</option>'; formRoomSelect.disabled = true;
+            formRoom.value = ""; formTime.value = new Date().toISOString().slice(0,16);
             houseModal.style.display = 'flex';
         });
 
         function openEditModal(id) {
-            modalTitle.innerText = "修改房源信息";
-            const h = houses.find(item => item.id === id);
-            if (!h) return;
-            editId.value = h.id;
-            formCode.value = h.code || "";
-            formTime.value = h.recordedTime;
-            
-            formBuilding.value = h.building;
+            modalTitle.innerText = "修改房源信息"; const h = houses.find(item => item.id === id); if (!h) return;
+            editId.value = h.id; formCode.value = h.code || ""; formTime.value = h.recordedTime; formBuilding.value = h.building;
             
             const maxFloor = getMaxFloorByBuilding(h.building);
             formFloorSelect.innerHTML = '<option value="">-- 请选择楼层 --</option>';
             for (let f = 1; f <= maxFloor; f++) {
-                if (f === 4 || f === 14 || f === 24) continue;
-                const opt = document.createElement('option');
-                opt.value = f;
-                opt.innerText = f + " 层";
-                formFloorSelect.appendChild(opt);
+                if ([4, 14, 24].includes(f)) continue;
+                const opt = document.createElement('option'); opt.value = f; opt.innerText = f + " 层"; formFloorSelect.appendChild(opt);
             }
             formFloorSelect.disabled = false;
-
-            const rNum = parseInt(h.room, 10);
-            let rawFloor = 1;
-            let rawSuffix = "01";
-            if(!isNaN(rNum)) {
-                rawFloor = Math.floor(rNum / 100);
-                rawSuffix = String(rNum % 100).padStart(2, '0');
-            }
+            let rawFloor = Math.floor(parseInt(h.room, 10) / 100);
+            let rawSuffix = String(parseInt(h.room, 10) % 100).padStart(2, '0');
             formFloorSelect.value = rawFloor;
 
             const suffixes = getValidRoomSuffixes(h.building);
             formRoomSelect.innerHTML = '<option value="">-- 尾号 --</option>';
             suffixes.forEach(suff => {
-                const opt = document.createElement('option');
-                opt.value = suff;
-                opt.innerText = suff + " 室";
-                formRoomSelect.appendChild(opt);
+                const opt = document.createElement('option'); opt.value = suff; opt.innerText = suff + " 室"; formRoomSelect.appendChild(opt);
             });
-            formRoomSelect.disabled = false;
-            formRoomSelect.value = rawSuffix;
+            formRoomSelect.disabled = false; formRoomSelect.value = rawSuffix;
 
-            formRoom.value = h.room;
-            formArea.value = h.area;
-            formLayout.value = h.layout;
-            formPrice.value = h.price;
-
-            if (h.img) {
-                currentImgBase64 = h.img;
-                previewImg.src = h.img;
-                previewImg.style.display = 'block';
-                uploadHint.style.display = 'none';
-            } else {
-                currentImgBase64 = "";
-                previewImg.style.display = 'none';
-                uploadHint.style.display = 'block';
-            }
-            deleteBtn.style.display = 'block';
-            houseModal.style.display = 'flex';
+            formRoom.value = h.room; formArea.value = h.area; formLayout.value = h.layout; formPrice.value = h.price;
+            if (h.img) { currentImgBase64 = h.img; previewImg.src = h.img; previewImg.style.display = 'block'; uploadHint.style.display = 'none'; }
+            else { currentImgBase64 = ""; previewImg.style.display = 'none'; uploadHint.style.display = 'block'; }
+            deleteBtn.style.display = 'block'; houseModal.style.display = 'flex';
         }
 
-        function closeModal() { houseModal.style.display = 'none'; }
-        closeModalBtn.addEventListener('click', closeModal);
-        cancelModalBtn.addEventListener('click', closeModal);
-
         saveBtn.addEventListener('click', () => {
-            const building = formBuilding.value;
-            const room = formRoom.value.trim();
-            const price = formPrice.value.trim();
-            const code = formCode.value.trim();
-            const recordedTime = formTime.value;
-
-            if (!building || !room || !price) {
-                showToast("请完整选择楼栋、楼层、尾号并填写租金！");
-                return;
-            }
-
-            const spec = getHouseSpec(building, room);
-            const targetId = editId.value;
+            const building = formBuilding.value; const room = formRoom.value.trim(); const price = formPrice.value.trim();
+            if (!building || !room || !price) { alert("请完整选择楼栋、楼层、尾号并填写租金！"); return; }
+            const spec = getHouseSpec(building, room); const targetId = editId.value;
 
             const houseData = {
                 id: targetId === "" ? 'id_' + Date.now() : targetId,
-                code: code,
-                recordedTime: recordedTime,
-                building: building,
-                room: room,
-                area: spec ? spec.area : (formArea.value || "未知"),
-                layout: spec ? spec.layout : (formLayout.value || "未知"),
-                price: price,
-                img: currentImgBase64
+                code: formCode.value.trim(), recordedTime: formTime.value, building: building, room: room,
+                area: spec.area, layout: spec.layout, price: price, img: currentImgBase64
             };
 
-            let backupHouses = [...houses];
-            if (targetId === "") {
-                backupHouses.push(houseData);
-            } else {
-                const idx = backupHouses.findIndex(item => item.id === targetId);
-                if (idx !== -1) backupHouses[idx] = houseData;
-            }
+            if (targetId === "") houses.push(houseData);
+            else { const idx = houses.findIndex(item => item.id === targetId); if (idx !== -1) houses[idx] = houseData; }
 
-            try {
-                localStorage.setItem(localKey, JSON.stringify(backupHouses));
-                houses = backupHouses; 
-                showToast(targetId === "" ? "新房源已安全录入！" : "更新成功！");
-                closeModal();
-                renderList();
-            } catch (error) {
-                if(confirm("💾 手机本地存储满！是否允许释放历史照片以腾出空间？（数据会安全保存）")) {
-                    houses.forEach(h => h.img = "");
-                    houseData.img = "";
-                    try {
-                        localStorage.setItem(localKey, JSON.stringify(houses));
-                        showToast("空间已释放并成功写入！");
-                        closeModal();
-                        renderList();
-                    } catch(e2) {
-                        alert("存储引擎冲突，请清理您的缓存。");
-                    }
-                }
-            }
+            localStorage.setItem(localKey, JSON.stringify(houses));
+            houseModal.style.display = 'none'; renderList();
         });
 
         deleteBtn.addEventListener('click', () => {
-            const targetId = editId.value;
-            if (targetId !== "" && confirm("确定要彻底销毁这套房源数据吗？")) {
-                let backupHouses = houses.filter(item => item.id !== targetId);
-                try {
-                    localStorage.setItem(localKey, JSON.stringify(backupHouses));
-                    houses = backupHouses;
-                    showToast("已成功移除！");
-                    closeModal();
-                    renderList();
-                } catch(e) {
-                    alert("删除失败");
-                }
+            if (confirm("确定要删除这套房源数据吗？")) {
+                houses = houses.filter(item => item.id !== editId.value);
+                localStorage.setItem(localKey, JSON.stringify(houses));
+                houseModal.style.display = 'none'; renderList();
             }
         });
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 2000);
-        }
+        searchInput.addEventListener('input', renderList);
+        filterBuilding.addEventListener('change', () => { updateFilterFloorOptions(); renderList(); });
+        [filterFloor, filterLayoutRoom, filterToilet].forEach(el => el.addEventListener('change', renderList));
+        closeModalBtn.addEventListener('click', () => houseModal.style.display = 'none');
+        cancelModalBtn.addEventListener('click', () => houseModal.style.display = 'none');
 
-        // ✅ 替换成这段带全量数据的终极逻辑
-        window.onload = () => { 
-            if(houses.length === 0){
-                houses = [{"id":"id_1781103079807","code":"105124199643","recordedTime":"2026-04-12T22:50","building":"11","room":"2401","area":"81.58㎡","layout":"2-2-1-1","price":"2600","img":""},{"id":"id_1781103079808","code":"105124199644","recordedTime":"2026-04-13T09:15","building":"12","room":"1502","area":"126.07㎡","layout":"3-2-1-2","price":"3200","img":""},{"id":"id_1781103079809","code":"105124199645","recordedTime":"2026-04-13T14:30","building":"18","room":"0804","area":"130.41㎡","layout":"3-2-1-2","price":"3400","img":""},{"id":"id_1781103079810","code":"105124199646","recordedTime":"2026-04-14T10:20","building":"4","room":"1203","area":"106.79㎡","layout":"3-2-1-2","price":"2800","img":""},{"id":"id_1781103079811","code":"105124199647","recordedTime":"2026-04-14T11:05","building":"8","room":"1901","area":"81.59㎡","layout":"2-2-1-1","price":"2400","img":""},{"id":"id_1781103079812","code":"105124199648","recordedTime":"2026-04-15T16:45","building":"21","room":"0502","area":"129.42㎡","layout":"3-2-1-2","price":"3300","img":""},{"id":"id_1781103079813","code":"105124199649","recordedTime":"2026-04-16T08:30","building":"14","room":"2206","area":"145.49㎡","layout":"4-2-1-2","price":"3800","img":""},{"id":"id_1781103079814","code":"105124199650","recordedTime":"2026-04-16T13:12","building":"23","room":"0703","area":"105.06㎡","layout":"3-2-1-2","price":"2950","img":""},{"id":"id_1781103079815","code":"105124199651","recordedTime":"2026-04-17T09:40","building":"12","room":"0601","area":"91.6㎡","layout":"3-2-1-2","price":"2500","img":""},{"id":"id_1781103079816","code":"105124199652","recordedTime":"2026-04-17T11:15","building":"13","room":"1802","area":"169.1㎡","layout":"4-2-1-2","price":"4200","img":""},{"id":"id_1781103079817","code":"105124199653","recordedTime":"2026-04-17T15:20","building":"19","room":"1104","area":"130.83㎡","layout":"3-2-1-2","price":"3350","img":""},{"id":"id_1781103079818","code":"105124199654","recordedTime":"2026-04-18T10:05","building":"22","room":"0302","area":"79.66㎡","layout":"2-2-1-1","price":"2300","img":""},{"id":"id_1781103079819","code":"105124199655","recordedTime":"2026-04-18T14:30","building":"6","room":"0903","area":"106.79㎡","layout":"3-2-1-2","price":"2750","img":""},{"id":"id_1781103079820","code":"105124199656","recordedTime":"2026-04-19T09:10","building":"11","room":"1503","area":"107.85㎡","layout":"3-2-1-2","price":"2900","img":""},{"id":"id_1781103079821","code":"105124199657","recordedTime":"2026-04-19T11:45","building":"16","room":"2506","area":"145.49㎡","layout":"4-2-1-2","price":"3900","img":""},{"id":"id_1781103079822","code":"105124199658","recordedTime":"2026-04-20T16:22","building":"18","room":"2002","area":"145.82㎡","layout":"4-2-1-2","price":"4000","img":""},{"id":"id_1781103079823","code":"105124199659","recordedTime":"2026-04-21T10:35","building":"5","room":"0701","area":"78.99㎡","layout":"2-2-1-1","price":"2450","img":""},{"id":"id_1781103079824","code":"105124199660","recordedTime":"2026-04-21T14:12","building":"10","room":"1204","area":"107.74㎡","layout":"3-2-1-2","price":"2850","img":""},{"id":"id_1781103079825","code":"105124199661","recordedTime":"2026-04-22T09:50","building":"15","room":"0803","area":"169.06㎡","layout":"4-2-1-2","price":"4300","img":""},{"id":"id_1781103079826","code":"105124199662","recordedTime":"2026-04-22T13:30","building":"20","room":"1705","area":"102.5㎡","layout":"3-2-1-2","price":"2900","img":""},{"id":"id_1781103079827","code":"105124199663","recordedTime":"2026-04-23T11:05","building":"7","room":"0504","area":"106.77㎡","layout":"3-2-1-2","price":"2700","img":""},{"id":"id_1781103079828","code":"105124199664","recordedTime":"2026-04-23T15:40","building":"12","room":"2204","area":"129.07㎡","layout":"3-2-1-2","price":"3300","img":""},{"id":"id_1781103079829","code":"105124199665","recordedTime":"2026-04-24T10:15","building":"14","room":"1102","area":"126.07㎡","layout":"3-2-1-2","price":"3150","img":""},{"id":"id_1781103079830","code":"105124199666","recordedTime":"2026-04-24T14:55","building":"23","room":"1604","area":"105.03㎡","layout":"3-2-1-2","price":"3000","img":""},{"id":"id_1781103079831","code":"105124199667","recordedTime":"2026-04-25T09:25","building":"9","room":"0801","area":"81.59㎡","layout":"2-2-1-1","price":"2400","img":""},{"id":"id_1781103079832","code":"105124199668","recordedTime":"2026-04-25T13:10","building":"11","room":"1904","area":"107.74㎡","layout":"3-2-1-2","price":"2950","img":""},{"id":"id_1781103079833","code":"105124199669","recordedTime":"2026-04-26T11:40","building":"17","room":"1202","area":"169.1㎡","layout":"4-2-1-2","price":"4100","img":""},{"id":"id_1781103079834","code":"105124199670","recordedTime":"2026-04-26T16:15","building":"21","room":"0701","area":"80.95㎡","layout":"2-2-1-2","price":"2650","img":""},{"id":"id_1781103079835","code":"105124199671","recordedTime":"2026-04-27T10:05","building":"4","room":"0602","area":"78.99㎡","layout":"2-2-1-1","price":"2350","img":""},{"id":"id_1781103079836","code":"105124199672","recordedTime":"2026-04-27T14:20","building":"8","room":"1503","area":"107.86㎡","layout":"3-2-1-2","price":"2850","img":""},{"id":"id_1781103079837","code":"105124199673","recordedTime":"2026-04-28T09:35","building":"13","room":"0501","area":"95.02㎡","layout":"3-2-1-2","price":"2700","img":""},{"id":"id_1781103079838","code":"105124199674","recordedTime":"2026-04-28T13:50","building":"18","room":"2306","area":"145.48㎡","layout":"4-2-1-2","price":"4100","img":""},{"id":"id_1781103079839","code":"105124199675","recordedTime":"2026-04-29T11:10","building":"22","room":"1203","area":"105.06㎡","layout":"3-2-1-2","price":"2900","img":""},{"id":"id_1781103079840","code":"105124199676","recordedTime":"2026-04-29T15:25","building":"5","room":"1104","area":"106.77㎡","layout":"3-2-1-2","price":"2800","img":""},{"id":"id_1781103079841","code":"105124199677","recordedTime":"2026-04-30T10:40","building":"10","room":"0902","area":"81.58㎡","layout":"2-2-1-1","price":"2500","img":""},{"id":"id_1781103079842","code":"105124199678","recordedTime":"2026-04-30T14:15","building":"16","room":"0801","area":"91.6㎡","layout":"3-2-1-2","price":"2600","img":""},{"id":"id_1781103079843","code":"105124199679","recordedTime":"2026-05-01T09:55","building":"19","room":"1702","area":"145.23㎡","layout":"4-2-1-2","price":"3850","img":""},{"id":"id_1781103079844","code":"105124199680","recordedTime":"2026-05-01T13:20","building":"21","room":"1104","area":"104.71㎡","layout":"3-2-1-2","price":"2800","img":""},{"id":"id_1781103079845","code":"105124199681","recordedTime":"2026-05-02T11:05","building":"6","room":"1202","area":"78.99㎡","layout":"2-2-1-1","price":"2450","img":""},{"id":"id_1781103079846","code":"105124199682","recordedTime":"2026-05-02T15:30","building":"9","room":"2103","area":"107.86㎡","layout":"3-2-1-2","price":"3000","img":""},{"id":"id_1781103079847","code":"105124199683","recordedTime":"2026-05-03T10:15","building":"14","room":"0604","area":"169.07㎡","layout":"4-2-1-2","price":"4000","img":""},{"id":"id_1781103079848","code":"105124199684","recordedTime":"2026-05-03T14:50","building":"23","room":"0501","area":"79.66㎡","layout":"2-2-1-1","price":"2350","img":""},{"id":"id_1781103079849","code":"105124199685","recordedTime":"2026-05-04T09:40","building":"7","room":"0802","area":"78.99㎡","layout":"2-2-1-1","price":"2400","img":""},{"id":"id_1781103079850","code":"105124199686","recordedTime":"2026-05-04T13:10","building":"12","room":"1906","area":"145.49㎡","layout":"4-2-1-2","price":"3950","img":""},{"id":"id_1781103079851","code":"105124199687","recordedTime":"2026-05-05T11:25","building":"15","room":"2202","area":"169.1㎡","layout":"4-2-1-2","price":"4400","img":""},{"id":"id_1781103079852","code":"105124199688","recordedTime":"2026-05-05T15:45","building":"20","room":"0904","area":"104.71㎡","layout":"3-2-1-2","price":"2850","img":""},{"id":"id_1781103079853","code":"105124199689","recordedTime":"2026-05-06T10:05","building":"4","room":"1504","area":"106.77㎡","layout":"3-2-1-2","price":"2900","img":""},{"id":"id_1781103079854","code":"105124199690","recordedTime":"2026-05-06T14:30","building":"11","room":"0702","area":"81.58㎡","layout":"2-2-1-1","price":"2550","img":""},{"id":"id_1781103079855","code":"105124199691","recordedTime":"2026-05-07T09:20","building":"17","room":"0603","area":"169.06㎡","layout":"4-2-1-2","price":"3900","img":""},{"id":"id_1781103079856","code":"105124199692","recordedTime":"2026-05-07T13:55","building":"22","room":"0704","area":"105.03㎡","layout":"3-2-1-2","price":"2800","img":""},{"id":"id_1781103079857","code":"105124199693","recordedTime":"2026-05-08T11:10","building":"8","room":"2204","area":"107.74㎡","layout":"3-2-1-2","price":"3100","img":""},{"id":"id_1781103079858","code":"105124199694","recordedTime":"2026-05-08T15:15","building":"13","room":"1503","area":"169.06㎡","layout":"4-2-1-2","price":"4150","img":""},{"id":"id_1781103079859","code":"105124199695","recordedTime":"2026-05-09T10:35","building":"18","room":"1101","area":"79.48㎡","layout":"2-2-1-1","price":"2500","img":""},{"id":"id_1781103079860","code":"105124199696","recordedTime":"2026-05-09T14:20","building":"21","room":"1605","area":"102.5㎡","layout":"3-2-1-2","price":"2950","img":""},{"id":"id_1781103079861","code":"105124199697","recordedTime":"2026-05-10T09:45","building":"5","room":"0503","area":"106.79㎡","layout":"3-2-1-2","price":"2700","img":""},{"id":"id_1781103079862","code":"105124199698","recordedTime":"2026-05-10T13:30","building":"10","room":"1803","area":"107.85㎡","layout":"3-2-1-2","price":"3050","img":""}];
-                localStorage.setItem('private_houses_v3', JSON.stringify(houses));
-            }
-            updateFilterFloorOptions(); 
-            renderList(); 
-        };
+        async function initApp() {
+            try {
+                let localData = localStorage.getItem(localKey);
+                if (localData) { houses = JSON.parse(localData); } 
+                else {
+                    const response = await fetch('data.json');
+                    if (response.ok) { houses = await response.json(); localStorage.setItem(localKey, JSON.stringify(houses)); }
+                }
+            } catch (e) { console.error("读取初始库失败，启用空白库", e); }
+            updateFilterFloorOptions(); renderList();
+        }
+        window.onload = initApp;
+    </script>
+</body>
+</html>
