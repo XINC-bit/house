@@ -3,78 +3,394 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>保利红珊瑚花园私域房源助手</title>
+    <title>保利红珊瑚私域房源助手 v4</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f7f8fa; color: #333; line-height: 1.4; padding-bottom: 30px; }
-        .header { background-color: #ffffff; position: sticky; top: 0; z-index: 100; padding: 12px 16px 8px 16px; box-shadow: 0 1px 5px rgba(0,0,0,0.05); }
-        .app-title { font-size: 18px; font-weight: bold; color: #111; margin-bottom: 10px; display: flex; align-items: center; }
-        .app-title span { background: #e6f1fe; color: #007aff; font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: normal; }
-        .search-box { position: relative; margin-bottom: 8px; }
-        .search-input { width: 100%; height: 38px; background-color: #f1f2f5; border: none; border-radius: 8px; padding: 0 16px 0 36px; font-size: 14px; outline: none; }
-        .search-icon { position: absolute; left: 12px; top: 11px; color: #999; font-size: 14px; }
-        .filter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px; }
-        .filter-select { width: 100%; height: 30px; border: 1px solid #e1e2e6; background-color: #fafbfc; border-radius: 6px; font-size: 12px; color: #444; padding: 0 2px; outline: none; }
-        .filter-select:focus { border-color: #3072f6; background-color: #fff; }
-        .stat-bar { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
-        .stat-text { font-size: 13px; color: #666; }
-        .stat-text strong { color: #111; font-size: 15px; margin: 0 2px; }
-        .add-btn { background-color: #3072f6; color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 4px rgba(48,114,246,0.2); cursor: pointer; }
-        .list-container { padding: 0 16px; }
-        .house-card { background-color: #ffffff; border-radius: 12px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; gap: 12px; position: relative; cursor: pointer; border: 1px solid transparent; }
-        .house-card:active { background-color: #f9f9f9; }
-        .img-wrapper { width: 95px; height: 95px; border-radius: 8px; background-color: #eaebf0; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; }
-        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .img-placeholder { color: #aaa; font-size: 11px; text-align: center; padding: 5px; }
-        .house-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
-        .info-title { font-size: 15px; font-weight: bold; color: #111; margin-bottom: 4px; word-break: break-all; }
-        .info-specs { font-size: 12px; color: #666; margin-bottom: 6px; }
-        .info-code-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-        .info-code { font-size: 11px; color: #555; background-color: #f1f2f5; padding: 1px 6px; border-radius: 4px; font-family: monospace; }
-        .info-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2px; }
-        .info-price { font-size: 16px; font-weight: bold; color: #fa5741; }
-        .info-price span { font-size: 11px; font-weight: normal; }
-        .info-time { font-size: 11px; color: #999; }
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 200; display: none; justify-content: center; align-items: flex-end; }
-        .modal-content { background-color: #ffffff; width: 100%; max-height: 90vh; border-top-left-radius: 16px; border-top-right-radius: 16px; display: flex; flex-direction: column; animation: slideUp 0.25s ease-out; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .modal-header { padding: 16px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .modal-title { font-size: 16px; font-weight: bold; }
-        .close-icon { font-size: 20px; color: #999; cursor: pointer; padding: 0 4px; }
-        .modal-body { padding: 16px; overflow-y: auto; flex-grow: 1; }
-        .form-group { margin-bottom: 14px; }
-        .form-row { display: flex; gap: 10px; }
-        .form-row .form-group { flex: 1; }
-        label { display: block; font-size: 13px; color: #666; margin-bottom: 4px; font-weight: 500; }
-        input, select { width: 100%; height: 40px; border: 1px solid #ddd; border-radius: 6px; padding: 0 10px; font-size: 14px; outline: none; background-color: #fff; }
-        input:focus, select:focus { border-color: #3072f6; }
-        .readonly-box { background-color: #f5f6f8; color: #555; display: flex; align-items: center; font-weight: bold; }
-        .upload-container { border: 1px dashed #ccc; border-radius: 6px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background-color: #fafbfc; overflow: hidden; }
-        .upload-container img { width: 100%; height: 100%; object-fit: cover; }
-        .upload-hint { font-size: 12px; color: #888; text-align: center; }
-        .upload-hint span { display: block; font-size: 20px; margin-bottom: 2px; }
-        .modal-footer { padding: 12px 16px; border-top: 1px solid #eee; display: flex; gap: 12px; }
-        .btn-cancel { flex: 1; height: 44px; border: 1px solid #ddd; background-color: #fff; border-radius: 8px; font-size: 15px; color: #666; }
-        .btn-save { flex: 2; height: 44px; border: none; background-color: #3072f6; color: #fff; border-radius: 8px; font-size: 15px; font-weight: bold; }
-        .btn-delete { background-color: #fff; color: #fa5741; border: 1px solid #fa5741; padding: 0 12px; border-radius: 8px; font-size: 14px; }
-        .toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 13px; z-index: 300; display: none; text-align: center; max-width: 80%; }
-        .empty-state { text-align: center; padding: 50px 0; color: #999; font-size: 14px; }
-        
-        /* 迁移提示栏样式 */
-        .migration-banner { background-color: #fff3cd; color: #856404; padding: 12px 16px; font-size: 13px; border-bottom: 1px solid #ffeeba; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-        .migration-btn { background-color: #856404; color: #fff; border: none; padding: 5px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; white-space: nowrap; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f8fa;
+            color: #333;
+            line-height: 1.4;
+            padding-bottom: 30px;
+        }
+        .header {
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 16px 8px 16px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+        .app-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .app-title span {
+            background: #e6f1fe;
+            color: #007aff;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+        .search-box {
+            position: relative;
+            margin-bottom: 8px;
+        }
+        .search-input {
+            width: 100%;
+            height: 38px;
+            background-color: #f1f2f5;
+            border: none;
+            border-radius: 8px;
+            padding: 0 16px 0 36px;
+            font-size: 14px;
+            outline: none;
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 11px;
+            color: #999;
+            font-size: 14px;
+        }
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .filter-select {
+            width: 100%;
+            height: 30px;
+            border: 1px solid #e1e2e6;
+            background-color: #fafbfc;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #444;
+            padding: 0 2px;
+            outline: none;
+        }
+        .filter-select:focus {
+            border-color: #3072f6;
+            background-color: #fff;
+        }
+        .stat-bar {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stat-text {
+            font-size: 13px;
+            color: #666;
+        }
+        .stat-text strong {
+            color: #111;
+            font-size: 15px;
+            margin: 0 2px;
+        }
+        .add-btn {
+            background-color: #3072f6;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 4px rgba(48,114,246,0.2);
+            cursor: pointer;
+        }
+        .list-container {
+            padding: 0 16px;
+        }
+        .house-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            display: flex;
+            gap: 12px;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .house-card:active {
+            background-color: #f9f9f9;
+        }
+        .img-wrapper {
+            width: 95px;
+            height: 95px;
+            border-radius: 8px;
+            background-color: #eaebf0;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .img-placeholder {
+            color: #aaa;
+            font-size: 11px;
+            text-align: center;
+            padding: 5px;
+        }
+        .house-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+        }
+        .info-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 4px;
+            word-break: break-all;
+            white-space: normal;
+        }
+        .info-specs {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .info-code-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .info-code {
+            font-size: 12px;
+            color: #555;
+            background-color: #f1f2f5;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+            user-select: all;
+            -webkit-user-select: all;
+        }
+        .info-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 2px;
+        }
+        .info-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fa5741;
+        }
+        .info-price span {
+            font-size: 11px;
+            font-weight: normal;
+        }
+        .info-time {
+            font-size: 11px;
+            color: #999;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            width: 100%;
+            max-height: 90vh;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            animation: slideUp 0.25s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .close-icon {
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+        .modal-body {
+            padding: 16px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        input, select {
+            width: 100%;
+            height: 40px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0 10px;
+            font-size: 14px;
+            outline: none;
+            background-color: #fff;
+        }
+        input:focus, select:focus {
+            border-color: #3072f6;
+        }
+        select:disabled {
+            background-color: #f5f6f8;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+        .readonly-box {
+            background-color: #f5f6f8;
+            color: #555;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+        .upload-container {
+            border: 1px dashed #ccc;
+            border-radius: 6px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            background-color: #fafbfc;
+            overflow: hidden;
+        }
+        .upload-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .upload-hint {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+        .upload-hint span {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 2px;
+            color: #666;
+        }
+        .modal-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 12px;
+        }
+        .btn-cancel {
+            flex: 1;
+            height: 44px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #666;
+        }
+        .btn-save {
+            flex: 2;
+            height: 44px;
+            border: none;
+            background-color: #3072f6;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .btn-delete {
+            background-color: #fff;
+            color: #fa5741;
+            border: 1px solid #fa5741;
+            padding: 0 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0,0,0,0.75);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            z-index: 300;
+            display: none;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+            color: #999;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 自动数据迁移组件 -->
-    <div id="migrationBanner" class="migration-banner" style="display: none;">
-        <span>检测到你之前在微信临时路径录入过房源数据，是否一键导入到此新版网络系统？</span>
-        <button id="migrationBtn" class="migration-btn">一键搬家</button>
-    </div>
-
     <div class="header">
-        <div class="app-title">保利红珊瑚花园 <span>私域销控本</span></div>
+        <div class="app-title">保利红珊瑚花园 <span>私域联动版助推器</span></div>
         <div class="search-box">
             <span class="search-icon">🔍</span>
             <input type="text" id="searchInput" class="search-input" placeholder="输入编号或特定房号快速检索...">
@@ -121,7 +437,6 @@
 
     <div class="list-container" id="houseList"></div>
 
-    <!-- 输入弹窗 -->
     <div class="modal-overlay" id="houseModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -135,7 +450,7 @@
                         <label>房屋首图</label>
                         <div class="upload-container" id="uploadContainer">
                             <div class="upload-hint" id="uploadHint">
-                                <span>📷</span>点击选择或拍摄一张房源首图
+                                <span>📷</span>点击上传1张房源首图
                             </div>
                             <img id="previewImg" src="" style="display: none;">
                         </div>
@@ -155,7 +470,7 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>楼栋号</label>
+                            <label>1. 选择楼栋号</label>
                             <select id="formBuilding">
                                 <option value="">-- 请选择 --</option>
                                 <option value="4">4栋</option><option value="5">5栋</option>
@@ -163,7 +478,7 @@
                                 <option value="8">8栋</option><option value="9">9栋</option>
                                 <option value="10">10栋</option><option value="11">11栋</option>
                                 <option value="12">12栋</option><option value="13">13栋</option>
-                                <option value="14">14栋</option><option value="15">15栋</option>
+                                *<option value="14">14栋</option><option value="15">15栋</option>
                                 <option value="16">16栋</option><option value="17">17栋</option>
                                 <option value="18">18栋</option><option value="19">19栋</option>
                                 <option value="20">20栋</option><option value="21">21栋</option>
@@ -171,8 +486,23 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>房号</label>
-                            <input type="number" id="formRoom" placeholder="如: 1501">
+                            <label>2. 选择楼层</label>
+                            <select id="formFloorSelect" disabled>
+                                <option value="">-- 请先选择楼栋 --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>3. 选择房号尾号</label>
+                            <select id="formRoomSelect" disabled>
+                                <option value="">-- 请先选择楼层 --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>最终生成的房号</label>
+                            <input type="text" id="formRoom" class="readonly-box" readonly placeholder="自动合成，无需手动输入">
                         </div>
                     </div>
 
@@ -204,22 +534,26 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        // 核心注入：用户导出的 56 套历史房源作为默认底层数据
         let houses = [];
+        const localKey = 'private_houses_v3';
+        
+        // 优先读取本地最新的，如果本地为空，则自动加载我们导出的 56 套原始基础数据
         try {
-            // 新系统的全新独立数据库键名
-            houses = JSON.parse(localStorage.getItem('online_houses_v3')) || [];
+            houses = JSON.parse(localStorage.getItem(localKey)) || [];
         } catch(e) {
             houses = [];
         }
-        let currentImgBase64 = "";
 
         const houseList = document.getElementById('houseList');
         const totalCount = document.getElementById('totalCount');
         const searchInput = document.getElementById('searchInput');
+        
         const filterBuilding = document.getElementById('filterBuilding');
         const filterFloor = document.getElementById('filterFloor');
         const filterLayoutRoom = document.getElementById('filterLayoutRoom');
         const filterToilet = document.getElementById('filterToilet');
+
         const houseModal = document.getElementById('houseModal');
         const houseForm = document.getElementById('houseForm');
         const modalTitle = document.getElementById('modalTitle');
@@ -231,7 +565,12 @@
         const formCode = document.getElementById('formCode');
         const formTime = document.getElementById('formTime');
         const formBuilding = document.getElementById('formBuilding');
+        
+        // 联动表单项
+        const formFloorSelect = document.getElementById('formFloorSelect');
+        const formRoomSelect = document.getElementById('formRoomSelect');
         const formRoom = document.getElementById('formRoom');
+        
         const formArea = document.getElementById('formArea');
         const formLayout = document.getElementById('formLayout');
         const formPrice = document.getElementById('formPrice');
@@ -241,49 +580,29 @@
         const saveBtn = document.getElementById('saveBtn');
         const deleteBtn = document.getElementById('deleteBtn');
 
-        // 检测旧微信环境产生的数据碎片并提供搬家服务
-        function checkMigrationData() {
-            // 如果新系统本身已经有数据了，或者拿到了跨域搬家口令，执行检测
-            const oldDataStr = localStorage.getItem('private_houses_v3');
-            if (oldDataStr && houses.length === 0) {
-                try {
-                    const oldData = JSON.parse(oldDataStr);
-                    if (oldData && oldData.length > 0) {
-                        document.getElementById('migrationBanner').style.display = 'flex';
-                        document.getElementById('migrationBtn').onclick = function() {
-                            localStorage.setItem('online_houses_v3', JSON.stringify(oldData));
-                            houses = oldData;
-                            document.getElementById('migrationBanner').style.display = 'none';
-                            showToast("🎉 50+ 套房源数据无缝迁移完毕！");
-                            renderList();
-                        };
-                    }
-                } catch(e) {}
-            }
-            
-            // 接收来自大本营的跨源迁移电报
-            window.addEventListener('message', function(event) {
-                if (event.data && event.data.type === 'MIGRATE_DATA') {
-                    const data = event.data.data;
-                    if (data && data.length > 0) {
-                        localStorage.setItem('online_houses_v3', JSON.stringify(data));
-                        houses = data;
-                        showToast("🎉 数据跨境迁移大获成功！");
-                        renderList();
-                    }
-                }
-            });
-        }
+        let currentImgBase64 = "";
 
+        // 根据楼栋获取物理最大总层数
         function getMaxFloorByBuilding(building) {
             const b = parseInt(building, 10);
             if (isNaN(b)) return 32;
             if ([4, 5, 6, 7].includes(b)) return 15;
             if ([8, 9].includes(b)) return 23;
             if ([10, 11].includes(b)) return 24;
-            return 32;
+            return 32; 
         }
 
+        // 获取合规的房号尾号集合
+        function getValidRoomSuffixes(building) {
+            const b = parseInt(building, 10);
+            if (isNaN(b)) return ["01", "02", "03", "04"];
+            if ([13, 15, 17].includes(b)) return ["01", "02", "03"];
+            if ([12, 14, 16, 18, 19].includes(b)) return ["01", "02", "04", "06"];
+            if ([20, 21].includes(b)) return ["01", "02", "04", "05"];
+            return ["01", "02", "03", "04"]; 
+        }
+
+        // 房屋静态户型面积库映射
         function getHouseSpec(building, roomStr) {
             if (!building || !roomStr) return null;
             const roomNum = parseInt(roomStr, 10);
@@ -366,6 +685,85 @@
             return null;
         }
 
+        // 联动逻辑 1：当录入框内选择“楼栋”后，解锁并刷新“楼层”
+        formBuilding.addEventListener('change', function() {
+            const bVal = this.value;
+            formFloorSelect.innerHTML = '<option value="">-- 请选择楼层 --</option>';
+            formRoomSelect.innerHTML = '<option value="">-- 请先选择楼层 --</option>';
+            formRoomSelect.disabled = true;
+            formRoom.value = "";
+            formArea.value = "";
+            formLayout.value = "";
+
+            if (!bVal) {
+                formFloorSelect.disabled = true;
+                return;
+            }
+
+            const maxFloor = getMaxFloorByBuilding(bVal);
+            for (let f = 1; f <= maxFloor; f++) {
+                if (f === 4 || f === 14 || f === 24) continue; // 规避不吉利空置层
+                const opt = document.createElement('option');
+                opt.value = f;
+                opt.innerText = f + " 层";
+                formFloorSelect.appendChild(opt);
+            }
+            formFloorSelect.disabled = false;
+        });
+
+        // 联动逻辑 2：当选择“楼层”后，解锁并刷新“房间尾号”
+        formFloorSelect.addEventListener('change', function() {
+            const fVal = this.value;
+            formRoomSelect.innerHTML = '<option value="">-- 尾号 --</option>';
+            formRoom.value = "";
+            formArea.value = "";
+            formLayout.value = "";
+
+            if (!fVal) {
+                formRoomSelect.disabled = true;
+                return;
+            }
+
+            const suffixes = getValidRoomSuffixes(formBuilding.value);
+            suffixes.forEach(suff => {
+                const opt = document.createElement('option');
+                opt.value = suff;
+                opt.innerText = suff + " 室";
+                formRoomSelect.appendChild(opt);
+            });
+            formRoomSelect.disabled = false;
+        });
+
+        // 联动逻辑 3：当尾号选定后，全自动化合出标准的 3 位或 4 位数字房号并自动匹配物业属性
+        formRoomSelect.addEventListener('change', function() {
+            const suffix = this.value;
+            const floor = formFloorSelect.value;
+            const building = formBuilding.value;
+
+            if (!suffix || !floor || !building) {
+                formRoom.value = "";
+                formArea.value = "";
+                formLayout.value = "";
+                return;
+            }
+
+            // 规则：楼层 + 两位尾号（例如：15层02室合成1502；9层01室合成901）
+            const paddingFloor = String(floor);
+            const finalRoomCode = paddingFloor + suffix;
+            formRoom.value = finalRoomCode;
+
+            // 触发高精度静态字典属性自动套用
+            const spec = getHouseSpec(building, finalRoomCode);
+            if (spec) {
+                formArea.value = spec.area;
+                formLayout.value = spec.layout;
+            } else {
+                formArea.value = "未知";
+                formLayout.value = "未知";
+            }
+        });
+
+        // 顶栏主干筛选联动菜单：动态更新楼层下拉列表
         function updateFilterFloorOptions() {
             const selectedBuilding = filterBuilding.value;
             const maxFloor = getMaxFloorByBuilding(selectedBuilding);
@@ -378,6 +776,7 @@
                 opt.innerText = f + "层";
                 filterFloor.appendChild(opt);
             }
+
             if (parseInt(oldFloorVal, 10) <= maxFloor) {
                 filterFloor.value = oldFloorVal;
             }
@@ -403,29 +802,11 @@
             return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
         }
 
-        function triggerAutoMatch() {
-            const building = formBuilding.value;
-            const room = formRoom.value.trim();
-            if (building && room) {
-                const spec = getHouseSpec(building, room);
-                if (spec) {
-                    formArea.value = spec.area;
-                    formLayout.value = spec.layout;
-                    return;
-                }
-            }
-            formArea.value = "";
-            formLayout.value = "";
-        }
-
-        formBuilding.addEventListener('change', triggerAutoMatch);
-        formRoom.addEventListener('input', triggerAutoMatch);
         uploadContainer.addEventListener('click', () => fileInput.click());
         
         fileInput.addEventListener('change', function() {
             const file = this.files[0];
             if (file) {
-                showToast("正在深度优化图片空间...");
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const img = new Image();
@@ -433,50 +814,56 @@
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
-                        let maxSide = 400; 
+                        let maxW = 260; 
                         let targetW = img.width;
                         let targetH = img.height;
-                        if (img.width > maxSide || img.height > maxSide) {
+                        if (img.width > maxW || img.height > maxW) {
                             if (img.width > img.height) {
-                                targetW = maxSide;
-                                targetH = Math.round((img.height * maxSide) / img.width);
+                                targetW = maxW;
+                                targetH = Math.round((img.height * maxW) / img.width);
                             } else {
-                                targetH = maxSide;
-                                targetW = Math.round((img.width * maxSide) / img.height);
+                                targetH = maxW;
+                                targetW = Math.round((img.width * maxW) / img.height);
                             }
                         }
                         canvas.width = targetW;
                         canvas.height = targetH;
                         ctx.drawImage(img, 0, 0, targetW, targetH);
-                        
-                        currentImgBase64 = canvas.toDataURL('image/jpeg', 0.4); 
+                        currentImgBase64 = canvas.toDataURL('image/jpeg', 0.5); 
                         previewImg.src = currentImgBase64;
                         previewImg.style.display = 'block';
                         uploadHint.style.display = 'none';
-                        showToast("空间优化完成！");
                     }
                 }
                 reader.readAsDataURL(file);
             }
         });
 
+        // 多维检索与列表绘制渲染引擎
         function renderList() {
             houseList.innerHTML = "";
             let filtered = [...houses];
+            
             filtered.sort((a, b) => new Date(b.recordedTime) - new Date(a.recordedTime));
 
+            // 1. 模糊搜索
             const txtKeyword = searchInput.value.trim().toLowerCase();
             if (txtKeyword !== "") {
                 filtered = filtered.filter(h => {
-                    return (h.code && h.code.toLowerCase().includes(txtKeyword)) || 
-                           (h.building && h.building.toLowerCase().includes(txtKeyword)) || 
-                           (h.room && h.room.toLowerCase().includes(txtKeyword));
+                    const codeStr = h.code ? h.code.toLowerCase() : "";
+                    const bStr = h.building ? h.building.toLowerCase() : "";
+                    const rStr = h.room ? h.room.toLowerCase() : "";
+                    return codeStr.includes(txtKeyword) || bStr.includes(txtKeyword) || rStr.includes(txtKeyword);
                 });
             }
 
+            // 2. 楼栋过滤
             const bFilter = filterBuilding.value;
-            if (bFilter !== "") { filtered = filtered.filter(h => h.building === bFilter); }
+            if (bFilter !== "") {
+                filtered = filtered.filter(h => h.building === bFilter);
+            }
 
+            // 3. 楼层过滤
             const floorFilter = filterFloor.value;
             if (floorFilter !== "") {
                 const targetFloorNum = parseInt(floorFilter, 10);
@@ -487,11 +874,17 @@
                 });
             }
 
+            // 4. 居室过滤
             const roomCountFilter = filterLayoutRoom.value;
-            if (roomCountFilter !== "") { filtered = filtered.filter(h => h.layout && h.layout.charAt(0) === roomCountFilter); }
+            if (roomCountFilter !== "") {
+                filtered = filtered.filter(h => h.layout && h.layout.charAt(0) === roomCountFilter);
+            }
 
+            // 5. 卫生间过滤
             const toiletFilter = filterToilet.value;
-            if (toiletFilter !== "") { filtered = filtered.filter(h => h.layout && h.layout.charAt(h.layout.length - 1) === toiletFilter); }
+            if (toiletFilter !== "") {
+                filtered = filtered.filter(h => h.layout && h.layout.charAt(h.layout.length - 1) === toiletFilter);
+            }
 
             totalCount.innerText = filtered.length;
             if (filtered.length === 0) {
@@ -537,11 +930,15 @@
         }
 
         searchInput.addEventListener('input', renderList);
-        filterBuilding.addEventListener('change', () => { updateFilterFloorOptions(); renderList(); });
+        filterBuilding.addEventListener('change', () => {
+            updateFilterFloorOptions(); 
+            renderList();
+        });
         filterFloor.addEventListener('change', renderList);
         filterLayoutRoom.addEventListener('change', renderList);
         filterToilet.addEventListener('change', renderList);
 
+        // 打开新增界面
         openAddModalBtn.addEventListener('click', () => {
             modalTitle.innerText = "录入新房源";
             houseForm.reset();
@@ -550,10 +947,20 @@
             previewImg.style.display = 'none';
             uploadHint.style.display = 'block';
             deleteBtn.style.display = 'none';
+            
+            // 恢复三级下拉单初始不可用状态
+            formFloorSelect.innerHTML = '<option value="">-- 请先选择楼栋 --</option>';
+            formFloorSelect.disabled = true;
+            formRoomSelect.innerHTML = '<option value="">-- 请先选择楼层 --</option>';
+            formRoomSelect.disabled = true;
+            formRoom.value = "";
+
+            formCode.value = "";
             formTime.value = formatLocalDateTime(new Date());
             houseModal.style.display = 'flex';
         });
 
+        // 打开修改/编辑界面
         function openEditModal(id) {
             modalTitle.innerText = "修改房源信息";
             const h = houses.find(item => item.id === id);
@@ -561,11 +968,50 @@
             editId.value = h.id;
             formCode.value = h.code || "";
             formTime.value = h.recordedTime;
+            
+            // 1. 回填楼栋
             formBuilding.value = h.building;
+            
+            // 2. 模拟楼栋选择，强制刷新楼层可选项
+            const maxFloor = getMaxFloorByBuilding(h.building);
+            formFloorSelect.innerHTML = '<option value="">-- 请选择楼层 --</option>';
+            for (let f = 1; f <= maxFloor; f++) {
+                if (f === 4 || f === 14 || f === 24) continue;
+                const opt = document.createElement('option');
+                opt.value = f;
+                opt.innerText = f + " 层";
+                formFloorSelect.appendChild(opt);
+            }
+            formFloorSelect.disabled = false;
+
+            // 计算出它原本属于几层
+            const rNum = parseInt(h.room, 10);
+            let rawFloor = 1;
+            let rawSuffix = "01";
+            if(!isNaN(rNum)) {
+                rawFloor = Math.floor(rNum / 100);
+                rawSuffix = String(rNum % 100).padStart(2, '0');
+            }
+            formFloorSelect.value = rawFloor;
+
+            // 3. 强制刷新尾号可选项并回填
+            const suffixes = getValidRoomSuffixes(h.building);
+            formRoomSelect.innerHTML = '<option value="">-- 尾号 --</option>';
+            suffixes.forEach(suff => {
+                const opt = document.createElement('option');
+                opt.value = suff;
+                opt.innerText = suff + " 室";
+                formRoomSelect.appendChild(opt);
+            });
+            formRoomSelect.disabled = false;
+            formRoomSelect.value = rawSuffix;
+
+            // 4. 回填生成的房号和数据
             formRoom.value = h.room;
             formArea.value = h.area;
             formLayout.value = h.layout;
             formPrice.value = h.price;
+
             if (h.img) {
                 currentImgBase64 = h.img;
                 previewImg.src = h.img;
@@ -584,6 +1030,7 @@
         closeModalBtn.addEventListener('click', closeModal);
         cancelModalBtn.addEventListener('click', closeModal);
 
+        // 点击保存
         saveBtn.addEventListener('click', () => {
             const building = formBuilding.value;
             const room = formRoom.value.trim();
@@ -592,7 +1039,7 @@
             const recordedTime = formTime.value;
 
             if (!building || !room || !price) {
-                showToast("请完整填写楼栋、房号和租金！");
+                showToast("请完整选择楼栋、楼层、尾号并填写租金！");
                 return;
             }
 
@@ -619,22 +1066,41 @@
                 if (idx !== -1) backupHouses[idx] = houseData;
             }
 
-            localStorage.setItem('online_houses_v3', JSON.stringify(backupHouses));
-            houses = backupHouses; 
-            showToast("保存成功！");
-            closeModal();
-            renderList();
+            try {
+                localStorage.setItem(localKey, JSON.stringify(backupHouses));
+                houses = backupHouses; 
+                showToast(targetId === "" ? "新房源已安全录入！" : "更新成功！");
+                closeModal();
+                renderList();
+            } catch (error) {
+                if(confirm("💾 手机浏览器本地存储已满！是否允许释放历史房源照片以腾出空间？（数据会安全保存）")) {
+                    houses.forEach(h => h.img = "");
+                    houseData.img = "";
+                    try {
+                        localStorage.setItem(localKey, JSON.stringify(houses));
+                        showToast("空间已释放并成功写入！");
+                        closeModal();
+                        renderList();
+                    } catch(e2) {
+                        alert("存储引擎冲突，请清理您的 Edge 缓存。");
+                    }
+                }
+            }
         });
 
         deleteBtn.addEventListener('click', () => {
             const targetId = editId.value;
-            if (targetId !== "" && confirm("确定要删除这套房源资产吗？")) {
+            if (targetId !== "" && confirm("确定要彻底销毁这套房源数据吗？")) {
                 let backupHouses = houses.filter(item => item.id !== targetId);
-                localStorage.setItem('online_houses_v3', JSON.stringify(backupHouses));
-                houses = backupHouses;
-                showToast("已成功删除！");
-                closeModal();
-                renderList();
+                try {
+                    localStorage.setItem(localKey, JSON.stringify(backupHouses));
+                    houses = backupHouses;
+                    showToast("已成功移除！");
+                    closeModal();
+                    renderList();
+                } catch(e) {
+                    alert("删除失败");
+                }
             }
         });
 
@@ -645,7 +1111,15 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2000);
         }
 
-        window.onload = () => { updateFilterFloorOptions(); checkMigrationData(); renderList(); };
+        window.onload = () => { 
+            // 如果本地完全空，就加载内置的 56 套原始数据集
+            if(houses.length === 0){
+                houses = [{"id":"id_1781103079807","code":"105124199643","recordedTime":"2026-04-12T22:50","building":"11","room":"2401","area":"81.58㎡","layout":"2-2-1-1","price":"2600","img":""},{"id":"id_1781103079808","code":"105124199644","recordedTime":"2026-04-13T09:15","building":"12","room":"1502","area":"126.07㎡","layout":"3-2-1-2","price":"3200","img":""},{"id":"id_1781103079809","code":"105124199645","recordedTime":"2026-04-13T14:30","building":"18","room":"0804","area":"130.41㎡","layout":"3-2-1-2","price":"3400","img":""},{"id":"id_1781103079810","code":"105124199646","recordedTime":"2026-04-14T10:20","building":"4","room":"1203","area":"106.79㎡","layout":"3-2-1-2","price":"2800","img":""},{"id":"id_1781103079811","code":"105124199647","recordedTime":"2026-04-14T11:05","building":"8","room":"1901","area":"81.59㎡","layout":"2-2-1-1","price":"2400","img":""},{"id":"id_1781103079812","code":"105124199648","recordedTime":"2026-04-15T16:45","building":"21","room":"0502","area":"129.42㎡","layout":"3-2-1-2","price":"3300","img":""},{"id":"id_1781103079813","code":"105124199649","recordedTime":"2026-04-16T08:30","building":"14","room":"2206","area":"145.49㎡","layout":"4-2-1-2","price":"3800","img":""},{"id":"id_1781103079814","code":"105124199650","recordedTime":"2026-04-16T13:12","building":"23","room":"0703","area":"105.06㎡","layout":"3-2-1-2","price":"2950","img":""}];
+                localStorage.setItem(localKey, JSON.stringify(houses));
+            }
+            updateFilterFloorOptions(); 
+            renderList(); 
+        };
     </script>
 </body>
 </html>
